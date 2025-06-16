@@ -63,7 +63,8 @@ def get_video_data_and_real_link(youtube_url):
         if not s3_client:
             raise Exception("S3 client not initialized. Check AWS credentials and S3 bucket configuration.")
 
-        yt = YouTube(youtube_url)
+        yt = YouTube(youtube_url, use_po_token=True)
+
         yt.check_availability()
 
         sanitized_title = re.sub(r'[^\w\s-]', '', yt.title).replace(' ', '_')

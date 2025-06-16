@@ -200,10 +200,3 @@ def download_youtube_data():
     else:
         logger.info(f"Successfully processed {youtube_url}.")
         return jsonify(result), 200
-
-# This block is for local development only.
-# Render will use the Procfile to run Gunicorn.
-if __name__ == '__main__':
-    # Flask's debug mode should be off in production
-    debug_mode = os.environ.get('FLASK_DEBUG') == '1' 
-    app.run(debug=debug_mode, host='0.0.0.0', port=int(APP_PORT)) # Port from .env

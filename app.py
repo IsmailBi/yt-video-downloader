@@ -36,7 +36,7 @@ APP_PORT = os.getenv("PORT")
 # --- S3 Client Setup ---
 s3_client = None
 if not all([AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, S3_BUCKET_NAME, AWS_DEFAULT_REGION]):
-    logger.error("Missing one or more AWS S3 environment variables! S3 operations will be disabled.")
+    logger.error("Missing one or more AWS S3 environment variables! S3 operations will be disabled..")
 else:
     try:
         s3_client = boto3.client(

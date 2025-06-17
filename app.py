@@ -9,6 +9,8 @@ import tempfile
 import shutil
 import boto3
 import logging
+from pytubefix import YouTube, request
+import traceback
 
 # Load environment variables from .env file (for local development)
 load_dotenv()
@@ -48,6 +50,7 @@ else:
         logger.info(f"S3 client initialized for bucket: {S3_BUCKET_NAME} in region: {AWS_DEFAULT_REGION}")
     except Exception as e:
         logger.error(f"Could not initialize S3 client with provided credentials: {e}")
+        logger.error(traceback.format_exc())
         s3_client = None
 
 
@@ -62,8 +65,15 @@ def get_video_data_and_real_link(youtube_url):
     try:
         if not s3_client:
             raise Exception("S3 client not initialized. Check AWS credentials and S3 bucket configuration.")
+        # Spoof the headers to avoid being blocked
+        request.default_headers["User-Agent"] = (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/113.0.0.0 Safari/537.36"
+        )
 
         yt = YouTube(youtube_url, use_po_token=True)
+
 
         yt.check_availability()
 

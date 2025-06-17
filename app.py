@@ -169,6 +169,7 @@ def get_video_data_and_real_link(youtube_url):
         }
     except Exception as e:
         logger.error(f"Error processing YouTube link {youtube_url}: {e}")
+        logger.error(traceback.format_exc())  # <--- This prints real error to Railway logs
         return {
             "status": "error",
             "message": f"Failed to process YouTube link: {str(e)}. Check server logs for details. Ensure FFmpeg is installed if high quality is desired, and AWS credentials/S3 config are correct.",

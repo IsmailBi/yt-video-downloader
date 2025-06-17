@@ -16,7 +16,8 @@ import traceback
 load_dotenv()
 
 app = Flask(__name__)
-
+YOUTUBE_PO_TOKEN = os.getenv("YOUTUBE_PO_TOKEN")
+YOUTUBE_VISITOR_DATA = os.getenv("YOUTUBE_VISITOR_DATA")
 # --- Configure Logging ---
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -67,7 +68,12 @@ def get_video_data_and_real_link(youtube_url):
             raise Exception("S3 client not initialized. Check AWS credentials and S3 bucket configuration.")
         # Spoof the headers to avoid being blocked
 
-        yt = YouTube(youtube_url, use_po_token=True)
+        yt = YouTube(
+            youtube_url,
+            use_po_token=True,
+            po_token=YOUTUBE_PO_TOKEN,
+            visitor_data=YOUTUBE_VISITOR_DATA
+        )
 
 
         yt.check_availability()

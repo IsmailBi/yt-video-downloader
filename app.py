@@ -9,7 +9,7 @@ import shutil
 import boto3
 import logging
 from pytubefix import YouTube
-import pytubefix.request as pytube_request
+import pytubefix
 import traceback
 
 # Load environment variables from .env file (for local development)
@@ -66,11 +66,13 @@ def get_video_data_and_real_link(youtube_url):
         if not s3_client:
             raise Exception("S3 client not initialized. Check AWS credentials and S3 bucket configuration.")
         # Spoof the headers to avoid being blocked
-        pytube_request.default_headers["User-Agent"] = (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/113.0.0.0 Safari/537.36"
-        )
+        pytubefix.__config__["headers"] = {
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                "AppleWebKit/537.36 (KHTML, like Gecko) "
+                "Chrome/113.0.0.0 Safari/537.36"
+            )
+        }
 
 
         yt = YouTube(youtube_url, use_po_token=True)

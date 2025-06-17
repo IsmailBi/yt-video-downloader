@@ -66,14 +66,6 @@ def get_video_data_and_real_link(youtube_url):
         if not s3_client:
             raise Exception("S3 client not initialized. Check AWS credentials and S3 bucket configuration.")
         # Spoof the headers to avoid being blocked
-        pytubefix.__config__["headers"] = {
-            "User-Agent": (
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                "AppleWebKit/537.36 (KHTML, like Gecko) "
-                "Chrome/113.0.0.0 Safari/537.36"
-            )
-        }
-
 
         yt = YouTube(youtube_url, use_po_token=True)
 
@@ -114,6 +106,8 @@ def get_video_data_and_real_link(youtube_url):
 
             logger.info(f"Merging video and audio with FFmpeg to: {os.path.basename(video_path_on_server)}")
             ffmpeg_command = f'ffmpeg -y -i "{video_temp_file}" -i "{audio_temp_file}" -c:v copy -c:a aac "{video_path_on_server}"'
+            os.system("which ffmpeg")
+
             os.system(ffmpeg_command)
             
             os.remove(video_temp_file)

@@ -1,5 +1,5 @@
-Flask==2.3.2
-pytubefix==7.0.0 # Or the version you successfully tested with
-python-dotenv==1.0.0
-boto3==1.28.0 # Or a recent stable version
-gunicorn==21.2.0
+pytubefix
+boto3
+flask
+gunicorn
+python-dotenv

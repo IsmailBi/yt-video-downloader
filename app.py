@@ -68,12 +68,9 @@ def get_video_data_and_real_link(youtube_url):
             raise Exception("S3 client not initialized. Check AWS credentials and S3 bucket configuration.")
         # Spoof the headers to avoid being blocked
 
-        yt = YouTube(
-            youtube_url,
-            use_po_token=True,
-            po_token=YOUTUBE_PO_TOKEN,
-            visitor_data=YOUTUBE_VISITOR_DATA
-        )
+        yt = YouTube(youtube_url, use_po_token=True)
+        yt.po_token = YOUTUBE_PO_TOKEN
+        yt.visitor_data = YOUTUBE_VISITOR_DATA
 
 
         yt.check_availability()
